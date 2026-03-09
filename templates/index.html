@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Face Search App</title>
+
+<style>
+
+body{
+    font-family: Arial;
+}
+
+.results{
+    display:flex;
+    flex-wrap:wrap;
+    gap:20px;
+}
+
+.card{
+    border:1px solid #ddd;
+    padding:10px;
+    width:150px;
+    text-align:center;
+}
+
+.card img{
+    width:120px;
+    height:120px;
+    object-fit:cover;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h2>Upload Image for Face Search</h2>
+
+<form method="POST" enctype="multipart/form-data">
+
+<input type="file" name="image" required>
+
+<button type="submit">Search</button>
+
+</form>
+
+{% if results %}
+
+<h3>Top Matches</h3>
+
+<div class="results">
+
+{% for name, conf, image in results %}
+
+<div class="card">
+
+{% if image %}
+<img src="{{ url_for('static', filename='known_faces/' + image) }}">
+{% endif %}
+
+<p><b>{{ name }}</b></p>
+
+<p>{{ conf }} %</p>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+{% endif %}
+
+</body>
+
+</html>
